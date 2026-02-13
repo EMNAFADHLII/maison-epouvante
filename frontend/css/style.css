@@ -1,0 +1,45 @@
+:root {
+    --blood-red: #880808;
+    --dark-void: #0a0a0a;
+    --mist-gray: #b0b0b0;
+}
+
+body {
+    background-color: var(--dark-void);
+    color: white;
+    font-family: 'Special Elite', 'Courier New', serif; /* Look machine à écrire pour le fanzine */
+    margin: 0;
+}
+
+header {
+    border-bottom: 2px solid var(--blood-red);
+    padding: 20px;
+    text-align: center;
+}
+
+h1 { color: var(--blood-red); text-transform: uppercase; letter-spacing: 5px; }
+
+.container { width: 80%; margin: auto; padding: 20px; }
+
+/* Boutons "Horreur" */
+.btn {
+    background: transparent;
+    border: 1px solid var(--blood-red);
+    color: var(--blood-red);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--blood-red);
+    color: white;
+    box-shadow: 0 0 15px var(--blood-red);
+}
+
+.card {
+    background: #151515;
+    border-left: 5px solid var(--blood-red);
+    padding: 15px;
+    margin-bottom: 10px;
+}

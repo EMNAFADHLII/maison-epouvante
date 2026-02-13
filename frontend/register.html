@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription — Maison Épouvante</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+</head>
+
+<body class="bg-dark d-flex align-items-center justify-content-center vh-100">
+
+<div class="card bg-black border-danger p-4" style="width: 450px;">
+  <h3 class="text-danger text-center mb-4">Créer un compte</h3>
+
+  <form id="registerForm">
+
+    <!-- PRÉNOM -->
+    <div class="mb-3">
+      <label class="form-label">Prénom</label>
+      <input
+        type="text"
+        class="form-control bg-dark text-light border-danger"
+        placeholder="Ex : Sarah"
+        required
+      >
+    </div>
+
+    <!-- NOM -->
+    <div class="mb-3">
+      <label class="form-label">Nom</label>
+      <input
+        type="text"
+        class="form-control bg-dark text-light border-danger"
+        placeholder="Ex : Dupont"
+        required
+      >
+    </div>
+
+    <!-- EMAIL -->
+    <div class="mb-3">
+      <label class="form-label">Adresse email</label>
+      <input
+        type="email"
+        class="form-control bg-dark text-light border-danger"
+        placeholder="exemple@mail.com"
+        required
+      >
+    </div>
+
+    <!-- MOT DE PASSE -->
+    <div class="mb-3">
+      <label class="form-label">Mot de passe</label>
+      <input
+        type="password"
+        class="form-control bg-dark text-light border-danger"
+        placeholder="Minimum 8 caractères + 1 chiffre"
+        required
+      >
+      <div class="form-text text-muted">
+        Le mot de passe doit contenir au moins 8 caractères et un chiffre.
+      </div>
+    </div>
+
+    <!-- BOUTON -->
+    <button type="submit" class="btn btn-danger w-100 mt-3">
+      S’inscrire
+    </button>
+
+  </form>
+
+  <p class="text-center mt-3 mb-0">
+    Déjà un compte ?
+    <a href="login.html" class="text-danger">Se connecter</a>
+  </p>
+</div>
+
+<script src="./js/api.js"></script>
+<script src="./js/register.js"></script>
+</body>
+</html>

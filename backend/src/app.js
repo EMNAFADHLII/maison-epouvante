@@ -17,5 +17,6 @@ app.get("/health", (req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/listings", listingRoutes);
+app.get('/', (req, res) => {res.send('Maison Epouvante Backend Deploye');});
 
 module.exports = app;

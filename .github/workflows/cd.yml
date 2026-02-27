@@ -46,6 +46,8 @@ jobs:
             docker run -d \
               --name maison-epouvante-backend \
               --restart unless-stopped \
-              --env-file .env \
+              -e PORT=3000 \
+              -e MONGO_URI="${{ secrets.MONGO_URI }}" \
+              -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -p 3000:3000 \
               maison-epouvante-backend:latest

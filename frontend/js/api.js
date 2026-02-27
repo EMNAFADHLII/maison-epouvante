@@ -1,20 +1,28 @@
-const API_URL = "http://34.155.205.146:3000/api";
+const API_URL = localStorage.getItem("apiBaseUrl") || "http://localhost:3000/api";
 
 async function apiFetch(path, options = {}) {
   const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(options.headers || {}),
+  };
 
-  const res = await fetch(API_URL + path, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` })
-    },
-    ...options
+  const res = await fetch(`${API_URL}${path}`, {
+    ...options,
+    headers,
   });
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message);
+  let payload = null;
+  try {
+    payload = await res.json();
+  } catch (_) {
+    payload = null;
   }
 
-  return res.json();
+  if (!res.ok) {
+    throw new Error(payload?.message || `Request failed (${res.status})`);
+  }
+
+  return payload;
 }

@@ -19,6 +19,15 @@ const ListingSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    category: {
+      type: String,
+      enum: ["Hantee", "Abandonnee", "Maudite", "Mysterieuse"],
+      default: "Mysterieuse"
+    },
+    imageUrl: {
+      type: String,
+      default: ""
+    },
     isAvailable: {
       type: Boolean,
       default: true

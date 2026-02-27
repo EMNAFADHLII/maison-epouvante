@@ -1,105 +1,61 @@
-// ================================
-// AUTH FRONTEND – Maison Épouvante
-// ================================
-
-const API_URL = "http://localhost:3000/api";
-
-// -------------------------------
-// LOGIN
-// -------------------------------
 const loginForm = document.getElementById("loginForm");
+const registerFormInline = document.getElementById("registerForm");
 
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = loginForm.querySelector("input[type='email']").value;
+    const email = loginForm.querySelector("input[type='email']").value.trim();
     const password = loginForm.querySelector("input[type='password']").value;
 
     try {
-      const res = await fetch(`${API_URL}/auth/login`, {
+      const data = await apiFetch("/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.message || "Erreur de connexion");
-        return;
-      }
-
-      // 🔐 Sauvegarde du token
       localStorage.setItem("token", data.token);
-
-      // 🔁 Redirection vers les annonces
       window.location.href = "index.html";
     } catch (err) {
-      alert("Erreur serveur");
-      console.error(err);
+      alert(err.message || "Erreur de connexion");
     }
   });
 }
 
-// -------------------------------
-// REGISTER
-// -------------------------------
-const registerForm = document.getElementById("registerForm");
-
-if (registerForm) {
-  registerForm.addEventListener("submit", async (e) => {
+if (registerFormInline) {
+  registerFormInline.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const inputs = registerForm.querySelectorAll("input");
+    const inputs = registerFormInline.querySelectorAll("input");
+    const lastname = inputs[0].value.trim();
+    const firstname = inputs[1].value.trim();
+    const email = inputs[2].value.trim();
+    const password = inputs[3].value;
 
-    const userData = {
-      lastname: inputs[0].value,
-      firstname: inputs[1].value,
-      email: inputs[2].value,
-      password: inputs[3].value,
-    };
-
-    if (userData.password.length < 8) {
-      alert("Le mot de passe doit contenir au moins 8 caractères");
+    if (password.length < 8) {
+      alert("Le mot de passe doit contenir au moins 8 caracteres");
       return;
     }
 
     try {
-      const res = await fetch(`${API_URL}/auth/register`, {
+      await apiFetch("/auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({ firstname, lastname, email, password }),
       });
 
-      const data = await res.json();
+      alert("Inscription reussie. Vous pouvez vous connecter.");
+      registerFormInline.reset();
 
-      if (!res.ok) {
-        alert(data.message || "Erreur d'inscription");
-        return;
+      const loginTabButton = document.querySelector("[data-bs-target='#login']");
+      if (loginTabButton) {
+        loginTabButton.click();
       }
-
-      alert("Inscription réussie ! Vous pouvez vous connecter.");
-      registerForm.reset();
-
-      // Revenir à l'onglet connexion
-      document
-        .querySelector("[data-bs-target='#login']")
-        .click();
     } catch (err) {
-      alert("Erreur serveur");
-      console.error(err);
+      alert(err.message || "Erreur d'inscription");
     }
   });
 }
 
-// -------------------------------
-// LOGOUT (utilisable plus tard)
-// -------------------------------
 function logout() {
   localStorage.removeItem("token");
   window.location.href = "login.html";

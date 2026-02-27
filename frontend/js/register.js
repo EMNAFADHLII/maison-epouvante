@@ -1,27 +1,31 @@
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+const registerForm = document.getElementById("registerForm");
 
-  const [firstName, lastName, email, password] = e.target.elements;
+if (registerForm) {
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  if (password.value.length < 8 || !/\d/.test(password.value)) {
-    alert("Mot de passe invalide (8 caractères minimum + un chiffre)");
-    return;
-  }
+    const [firstname, lastname, email, password] = e.target.elements;
 
-  try {
-    await apiFetch("/auth/register", {
-      method: "POST",
-      body: JSON.stringify({
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        password: password.value,
-      }),
-    });
+    if (password.value.length < 8 || !/\d/.test(password.value)) {
+      alert("Mot de passe invalide (8 caracteres minimum + un chiffre)");
+      return;
+    }
 
-    alert("Compte créé avec succès !");
-    window.location.href = "login.html";
-  } catch (err) {
-    alert(err.message);
-  }
-});
+    try {
+      await apiFetch("/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+          firstname: firstname.value.trim(),
+          lastname: lastname.value.trim(),
+          email: email.value.trim(),
+          password: password.value,
+        }),
+      });
+
+      alert("Compte cree avec succes.");
+      window.location.href = "login.html";
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+}
